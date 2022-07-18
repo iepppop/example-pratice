@@ -3,78 +3,76 @@ import { Link } from "react-router-dom";
 import { motion, useViewportScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 
+const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
+
 const Main = ({ imageDetails }) => {
-    const { scrollYProgress } = useViewportScroll();
-    const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-
-    const [canScroll, setCanScroll] = useState(false);
-
-    useEffect(() => {
-        if (canScroll === false) {
-            document.querySelector("body").classList.add("no-scroll");
-        } else {
-            document.querySelector("body").classList.remove("no-scroll");
-        }
-    }, [canScroll]);
-
   return (
+    <Container>
     <Contain>
-      <Text>
-        <motion.h1
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.1, ease: [0.43, 0.13, 0.23, 0.96] }}
-        >
-          PLANTS.
-        </motion.h1>
-        <ImageWrap
+      <ImgWrap
+      >
+        <Img
           style={{
             width: imageDetails.width,
             height: imageDetails.height,
-          }}
-          exit={{
-            y: "50%",
-            width: "100%",
-            height: "500px",
-          }}
-          transition={{
-            duration: 1.4, ease: [0.6, 0.01, -0.05, 0.9]
-          }}
-        >
+          }}>
           <Link to={`/plants`}>
             <motion.img
-              alt="Yasmeen Tariq"
               whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
-              src="https://blog.kakaocdn.net/dn/bqVCrM/btrHvo5tJpA/XddQD5w6SCo62yBFnBRkcK/img.jpg"
+              src="https://blog.kakaocdn.net/dn/SM81V/btrHqQXbaRp/U0q3HKRKS6Nk5zUSDOsObk/img.jpg"
+              transition={transition}
+              exit={{ scale: 1.0 }}
             />
           </Link>
-        </ImageWrap>
+        </Img>
+      </ImgWrap>
+      <Text
+        style={{
+          width: imageDetails.width,
+        }}>
+        plants
       </Text>
     </Contain>
+    </Container>
   );
 };
 export default Main;
 
+const Container = styled.div`
+  width:100%;
+  height: auto;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+`
+
 const Contain = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+  width:100%;
+  height:100vh;
+`
 
-const Text = styled(motion.div)`
-  color: #202020;
+const ImgWrap = styled.div`
+  width:100%;
+  height:80vh;
+  display:flex;
+  align-items:end;
+  justify-content:center;
+`
 
-  h1 {
-    font-size: 110px;
-    font-weight: 400;
-  }
-`;
-
-const ImageWrap = styled(motion.div)`
-  overflow: hidden;
-  img {
+const Img = styled.div`
+  overflow:hidden;
+  img{
     width: 100%;
   }
-`;
+`
+
+const Text = styled.div`
+  height:20vh;
+  margin:0 auto;
+  font-size:30px;
+  padding:15px 0 0 0;
+
+  font-weight:900;
+`
+
+
+
+

@@ -1,12 +1,39 @@
 import { useEffect, useState } from "react";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import styled from "styled-components";
 
 
-const transition = { duration: 1.4, ease: [0.6, 0.01, -0.05, 0.9] };
+const transition = { duration: 0.5, ease: [0.6, 0.01, 0.3, 0.9] };
+
+const firstName = {
+    initial: {
+      y: 0,
+    },
+    animate: {
+      y: 0,
+      transition: {
+        delayChildren: 0.6,
+        staggerChildren: 0.04,
+        staggerDirection: -1,
+      },
+    },
+  };
+
+const letter = { 
+    initial: {
+        opacity:0,
+        y: 20,
+      },
+      animate: {
+        opacity:1,
+        y: 0,
+        transition: { duration: 1, ...transition},
+      },
+}
+
 
 const Sub = ({ imageDetails }) => {
-    const { scrollYProgress } = useViewportScroll();
+    const { scrollYProgress } = useScroll();
     const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
 
     const [canScroll, setCanScroll] = useState(false);
@@ -20,84 +47,108 @@ const Sub = ({ imageDetails }) => {
     }, [canScroll]);
 
     return (
-        <Contain>
-            <Text>
-                <TextWrap>
-                    <motion.h1
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: [0.6, 0.01, -0.05, 0.9] }}
-                    >
-                        Natural
-                    </motion.h1>
-                </TextWrap>
-                <ImageContainerSingle
+        <Container
+            onAnimationComplete={() => setCanScroll(true)}
+            initial='initial'
+            animate='animate'
+            exit='exit'
+        >
+            <Contain>
+                <Text variants={firstName}>
+                    <motion.h1 variants={letter}>p</motion.h1>
+                    <motion.h1 variants={letter}>l</motion.h1>
+                    <motion.h1 variants={letter}>a</motion.h1>
+                    <motion.h1 variants={letter}>n</motion.h1>
+                    <motion.h1 variants={letter}>t</motion.h1>
+                    <motion.h1 variants={letter}>s</motion.h1>
+                    <span></span>
+                </Text>
+                <ImgWrap
                     initial={{
-                        y: "50%",
+                        y: 0,
                     }}
                     animate={{
-                        transition: { delay: 0.2, ...transition },
+                        y: '32%',
                     }}
+                    transition={transition}
                 >
-                    <ImageWrap
+                    <Img
                         style={{
+                            width: imageDetails.width,
+                            height: imageDetails.height,
+                            scale: scale,
+                        }}
+                        animate={{
                             width: "100%",
-                            height:"500px"
                         }}
-                        initial={{
-                            height:"500px"
-                        }}
+                        transition={{ ...transition, delay: 0.5 }}
                     >
                         <motion.img
-                            alt='Yasmeen Tariq'
-                            transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
-                            src="https://blog.kakaocdn.net/dn/bqVCrM/btrHvo5tJpA/XddQD5w6SCo62yBFnBRkcK/img.jpg"
-                            style={{ scale: scale }}
-                            initial={{ scale: 1.0 }}
-                            animate={{
-                                transition: { delay: 0.2, ...transition },
-                            }}
+                            src="https://blog.kakaocdn.net/dn/SM81V/btrHqQXbaRp/U0q3HKRKS6Nk5zUSDOsObk/img.jpg"
                         />
-                    </ImageWrap>
-                    dsf
-                </ImageContainerSingle>
-            </Text>
-        </Contain>
+                    </Img>
+                </ImgWrap>
+            </Contain>
+            <Explain>
+            Land plants are multicellular organisms that can be distinguished from other living things by a number of characteristics: They make their own food. Plants are photosynthetic and contain a green pigment called chlorophyll, which enables plants to convert energy from the sun into food. Plants store their food as starch.
+            </Explain>
+        </Container>
     )
 }
 export default Sub;
 
-const Contain = styled.div`
+const Container = styled(motion.div)`
     width:100%;
-    height:100vh;
+    height:auto;
     display:flex;
-    align-items:center;
-    justify-content:center;
-
+    flex-direction:column;
+    position:relative;
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 `
 
-const Text = styled.div`
-    color:#202020;
-
-    h1{
-        font-size:110px;  
-        font-weight:400;
-    }
+const Contain = styled.div`
+  height:100vh;
 `
 
-const TextWrap = styled.div`
-    text-align:center;
+const ImgWrap = styled(motion.div)`
+  width:100%;
+  height:80vh;
+  display:flex;
+  align-items:first;
+  justify-content:center;
+  overflow:hidden;
 `
 
-const ImageWrap = styled(motion.div)`
-   
-    
-    img{
-        width: 100%;
-    }
-`
-
-const ImageContainerSingle = styled(motion.div)`
+const Img = styled(motion.div)`
+  overflow:hidden;
+  img{
     width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
+  }
+`
+
+const Text = styled(motion.div)`
+  height:20vh;
+  margin:0 auto;
+  font-size:30px;
+  padding:30px 0 0 50px;
+  font-size:60px;
+  display:flex;
+  align-items:first;
+
+  h1{
+    font-size:42px;
+  }
+
+  span{
+    font-size:15px;
+    padding:20px 0 10px 30px;
+    font-weight:300;
+  }
+`
+
+const Explain = styled.div`
+  font-size:12px;
+  position:absolute;
+  top:115%;
+  padding:0 30px;
 `
