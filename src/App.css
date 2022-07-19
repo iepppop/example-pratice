@@ -9,9 +9,16 @@
 
 body{
   font-family: 'Playfair Display', serif;
+  background:#f8f8f8;
 }
 
 
 .no-scroll{
   overflow-y: hidden;
+}
+
+@font-face {
+  font-family: "Big";
+  font-weight: 500;
+  src: url("./fonts/BigNoodleTitling.ttf.woff") format("woff");
 }

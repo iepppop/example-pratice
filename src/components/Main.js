@@ -1,78 +1,55 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import NikeCard from "./NikeCard";
 
-const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
-const Main = ({ imageDetails }) => {
+const Main = () => {
   return (
     <Container>
-    <Contain>
-      <ImgWrap
-      >
-        <Img
-          style={{
-            width: imageDetails.width,
-            height: imageDetails.height,
-          }}>
-          <Link to={`/plants`}>
-            <motion.img
-              whileHover={{ scale: 1.1 }}
-              src="https://blog.kakaocdn.net/dn/SM81V/btrHqQXbaRp/U0q3HKRKS6Nk5zUSDOsObk/img.jpg"
-              transition={transition}
-              exit={{ scale: 1.0 }}
-            />
-          </Link>
-        </Img>
-      </ImgWrap>
-      <Text
-        style={{
-          width: imageDetails.width,
-        }}>
-        plants
-      </Text>
-    </Contain>
+      <NikeCard />
+
     </Container>
   );
 };
 export default Main;
 
 const Container = styled.div`
-  width:100%;
-  height: auto;
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-`
-
-const Contain = styled.div`
-  width:100%;
-  height:100vh;
-`
-
-const ImgWrap = styled.div`
-  width:100%;
-  height:80vh;
+  width: 100%;
+  height: 100vh;
   display:flex;
-  align-items:end;
-  justify-content:center;
-`
-
-const Img = styled.div`
+  align-items: center;
+  justify-content: center;
+  position:relative;
   overflow:hidden;
-  img{
-    width: 100%;
-  }
+`
+const Circle = styled.div`
+  width:500px;
+  height:500px;
+  position:absolute;
+  background:#d8dd0e;
+  border-radius:50%;
+  filter:blur(50px);
+  opacity:0.4;
+  right:-100px;
+  top:-80px;
+  z-index:-1;
 `
 
-const Text = styled.div`
-  height:20vh;
-  margin:0 auto;
-  font-size:30px;
-  padding:15px 0 0 0;
+const Circle2 = styled.div`
+  width:400px;
+  height:400px;
+  position:absolute;
+  background:#ff9c00;
+  border-radius:50%;
+  filter:blur(50px);
+  opacity:0.6;
+  right:-30px;
+  top:-50px;
+  z-index:-1;
 
-  font-weight:900;
 `
-
 
 
 
