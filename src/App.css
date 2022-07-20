@@ -10,6 +10,10 @@
 body{
   font-family: 'Playfair Display', serif;
   background:#f8f8f8;
+  width:"100%";  
+  box-sizing: border-box; 
+  overflow-x:hidden;
+  background:#e6e6e1;
 }
 
 

@@ -13,6 +13,7 @@
     "react-scripts": "5.0.1",
     "react-use-measure": "^2.1.1",
     "styled-components": "^5.3.5",
+    "throttle-debounce-ts": "^1.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

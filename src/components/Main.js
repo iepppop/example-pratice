@@ -22,7 +22,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   position:relative;
-  overflow:hidden;
+  overflow-x:hidden;
 `
 const Circle = styled.div`
   width:500px;
