@@ -143,8 +143,8 @@ const Example = () => {
                     </SubImg>
                 </Sub>
             </Section>
-            <Gallery ref={ref} style={{ marginRight: "20%" }}>
-                <Container style={{ height: "300vh" }}>
+            <Gallery ref={ref}>
+                <Container>
                     <StickyWrapper>
                         <h1>
                             Creating our collections
@@ -258,6 +258,7 @@ const Image = styled.div`
 const Container = styled.div`
     margin: 4px auto 0;
     width:100%;
+    height:200vh;
 `
 
 const StickyWrapper = styled.div`
