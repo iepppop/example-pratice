@@ -6,77 +6,18 @@ import ImageExample from './components/ImageExample'
 import Example from './components/Example';
 import styled from 'styled-components';
 import { useEffect } from 'react';
+import Box from './components/Box';
 
-function FadeInWhenVisible({ children }) {
-  const controls = useAnimation();
-  const [ref, inView] = useInView();
-
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-
-  return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      initial="hidden"
-      transition={{ duration: 0.3 }}
-      variants={{
-        visible: { opacity: 1, scale: 1 },
-        hidden: { opacity: 0, scale: 0 }
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function Box() {
-  return (
-    <div
-      style={{
-        padding: 40,
-        background: "white",
-        display: "inline-block",
-        borderRadius: 5
-      }}
-    />
-  );
-}
 
 function App() {
   const location = useLocation();
 
-  
-
   return (
-    <Container>
-            <FadeInWhenVisible>
-        <Box />
-      </FadeInWhenVisible>
-      <FadeInWhenVisible>
-        <Box />
-      </FadeInWhenVisible>
-      <FadeInWhenVisible>
-        <Box />
-      </FadeInWhenVisible>
-      <FadeInWhenVisible>
-        <Box />
-      </FadeInWhenVisible>
-      <FadeInWhenVisible>
-        <Box />
-      </FadeInWhenVisible>
-      <FadeInWhenVisible>
-        <Box />
-      </FadeInWhenVisible>
-       {/* <AnimatePresence exitBeforeEnter>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Box />} />
-        </Routes>
-      </AnimatePresence> */}
-    </Container>
+    <>
+    <motion.div style={{ height: "200vh" }}>
+    <Box />
+  </motion.div>
+  </>
   );
 }
 
