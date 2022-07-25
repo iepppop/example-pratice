@@ -8,7 +8,8 @@
 }
 
 body{
-  font-family: 'Playfair Display', serif;
+  /* font-family: 'Playfair Display', serif; */
+  font-family: 'Poppins', serif;
   background:#f8f8f8;
   width:"100%";  
   box-sizing: border-box; 
