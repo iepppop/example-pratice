@@ -35,20 +35,36 @@ const internalLinks = [
     },
 ];
 
+const transition = {
+    duration: 0.8,
+    ease: [0.6, -0.05, 0.01, 0.9],
+  }
+  
+  const textReveal = {
+    initial: {
+      y: "200%",
+      opacity: 0,
+    },
+    animate: {
+      y: "0%",
+      opacity: 1,
+    },
+  };
+
 const MenuContent = () => {
     const [open, setOpen] = useRecoilState(openState);
-    console.log(open)
     return (
         <MenuHolder>
             <MenuInside
                 style={{
                     left: `${open ? "0px" : "-100vw"}`,
                 }}
+                open={open}
             >
                 <MenuNavContainer>
-                    <InternalNavLink>
+                    <InternalNavLink open={open}>
                         {internalLinks.map((link) => (
-                            <li key={link.url}>
+                            <li>
                                 <a href={link.url}>{link.component}</a>
                                 <img src={link.img} />
                             </li>
@@ -56,7 +72,6 @@ const MenuContent = () => {
                     </InternalNavLink>
                 </MenuNavContainer>
             </MenuInside>
-
         </MenuHolder>
     )
 }
@@ -70,6 +85,7 @@ const MenuInside = styled.div`
     position: fixed;
     width:100vw;
     height:100vh;
+    transform: ${props => props.open ? 'translateX(0)' : 'translateX(-100%)'}
     top:0;
     transition: left 1s cubic-bezier(1, 0, 0, 1);
     background-color: #111;
@@ -86,8 +102,18 @@ const MenuNavContainer = styled.div`
 `
 
 const InternalNavLink = styled.ul`
+    ${props => props.open && `
+    @for $i from 0 through 4 {
+        li:nth-child(#{$i + 1}n) {
+          a {
+            transition-delay: #{$i/10 + 0.8}s;
+          }
+        }
+      }
+    `}
+
     li{
-        margin-bottom: 20px;
+        margin-bottom: 20px;  
 
         :hover{
             img{
