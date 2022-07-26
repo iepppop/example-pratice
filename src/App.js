@@ -13,6 +13,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
+import Career from './components/Career';
 
 
 
@@ -20,6 +21,7 @@ function App() {
   const location = useLocation();
 
   return (
+    <AnimatePresence exitBeforeEnter>
     <RecoilRoot>
       <Header />
       <MainContainer>
@@ -29,6 +31,10 @@ function App() {
         <ContactButton />
       </MainContainer>
       </RecoilRoot>
+      <Routes>
+        <Route path="/career" element={<Career/>} />
+      </Routes>
+      </AnimatePresence>
 
   );
 }

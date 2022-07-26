@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { openState } from './RecoilState';
 import { useRecoilState } from "recoil";
+import { AnimatePresence, motion } from 'framer-motion';
 
 const internalLinks = [
     {
@@ -28,51 +29,70 @@ const internalLinks = [
             "https://images.unsplash.com/photo-1593697821028-7cc59cfd7399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2100&q=80",
     },
     {
-        url: "#5",
+        url: "/career",
         component: <span>Career</span>,
         img:
             "https://images.unsplash.com/photo-1588200618450-3a5b1d3b9aa5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80",
     },
 ];
 
-const transition = {
-    duration: 0.8,
-    ease: [0.6, -0.05, 0.01, 0.9],
-  }
+
+const gridAnimation = {
+    show: {
+        transition: { staggerChildren: 0.2, delayChildren: 0.2 }
+    },
+    hide: {
+        transition: { staggerChildren: 0.2, staggerDirection: -1 }
+    },
+}
+
+const imgAnimation = {
+    show: {
+        x: [-500, 0],
+        opacity: [0, 1],
+        scale: [0.95, 1],
+    },
+    hide: {
+        x: [0, -500],
+        opacity: [1, 0],
+        scale: [1, 0.95],
+    },
+}
   
-  const textReveal = {
-    initial: {
-      y: "200%",
-      opacity: 0,
-    },
-    animate: {
-      y: "0%",
-      opacity: 1,
-    },
-  };
 
 const MenuContent = () => {
     const [open, setOpen] = useRecoilState(openState);
     return (
+        <AnimatePresence exitBeforeEnter>
         <MenuHolder>
             <MenuInside
                 style={{
                     left: `${open ? "0px" : "-100vw"}`,
                 }}
                 open={open}
-            >
+            >   {open && (
                 <MenuNavContainer>
-                    <InternalNavLink open={open}>
-                        {internalLinks.map((link) => (
-                            <li>
-                                <a href={link.url}>{link.component}</a>
-                                <img src={link.img} />
-                            </li>
-                        ))}
-                    </InternalNavLink>
+                        <InternalNavLink
+                            open={open}
+                            variants={gridAnimation}
+                            animate="show"
+                            exit="hide"
+                            key={open}
+                        >
+                            {internalLinks.map((link) => (
+                                <motion.li
+                                    key={link.url}
+                                    variants={imgAnimation}>
+                                    <a href={link.url}>{link.component}</a>
+                                    <img src={link.img} />
+                                </motion.li>
+                            ))}
+                        </InternalNavLink>
                 </MenuNavContainer>
+                  )}
             </MenuInside>
         </MenuHolder>
+        </AnimatePresence>
     )
 }
 export default MenuContent;
@@ -93,7 +113,7 @@ const MenuInside = styled.div`
     z-index: 10;
 `
 
-const MenuNavContainer = styled.div`
+const MenuNavContainer = styled(motion.div)`
     position: relative;
     left: 220px;
     top: 100px;
@@ -101,7 +121,7 @@ const MenuNavContainer = styled.div`
     width: calc(90vw - 260px);
 `
 
-const InternalNavLink = styled.ul`
+const InternalNavLink = styled(motion.ul)`
     ${props => props.open && `
     @for $i from 0 through 4 {
         li:nth-child(#{$i + 1}n) {
